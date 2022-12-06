@@ -1,4 +1,4 @@
-package io.github.yesminmarie.localizacao.domain.entity.repository;
+package io.github.yesminmarie.localizacao.domain.repository;
 
 import io.github.yesminmarie.localizacao.domain.entity.Cidade;
 import org.springframework.data.domain.Page;
