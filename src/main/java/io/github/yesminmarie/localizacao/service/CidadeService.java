@@ -2,7 +2,9 @@ package io.github.yesminmarie.localizacao.service;
 
 import io.github.yesminmarie.localizacao.domain.entity.Cidade;
 import io.github.yesminmarie.localizacao.domain.entity.repository.CidadeRepository;
+import io.github.yesminmarie.localizacao.domain.entity.repository.specs.CidadeSpecs;
 import org.springframework.data.domain.*;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -49,9 +51,15 @@ public class CidadeService {
         ExampleMatcher matcher = ExampleMatcher
                 .matching()
                 .withIgnoreCase("nome")
-                .withStringMatcher(ExampleMatcher.StringMatcher.STARTING)
-                .withIncludeNullValues();
+                .withStringMatcher(ExampleMatcher.StringMatcher.STARTING);
         Example<Cidade> example = Example.of(cidade, matcher);
         return repository.findAll(example);
+    }
+
+    public void listarCidadesByNomeSpec(){
+        repository
+                .findAll(CidadeSpecs.nomeEqual("São Paulo")
+                        .or(CidadeSpecs.habitantesGreaterThan(1000)))
+                .forEach(System.out::println);
     }
 }
